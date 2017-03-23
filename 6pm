@@ -47,7 +47,7 @@ sub run-zef(+@argv, :to($inst-to) = $to.path, *%pars) {
             "$par$k=$v"
         }
     }
-    my $cmd = "zef --to=inst#$inst-to @argv[] @pars[]";
+    my $cmd = "zef --to=inst#$inst-to @pars[] @argv[]";
     shell $cmd
 }
 
