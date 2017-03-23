@@ -2,9 +2,11 @@
 use v6;
 use JSON::Fast;
 
-my IO::Path $base-dir   = ".".IO.resolve;
-my IO::Path $to         = $base-dir.child: "perl6-modules";
-my IO::Path $meta       = $base-dir.child: "META6.json";
+my $debug = so %*ENV<_6PM_DEBUG>;
+
+my IO::Path $base-dir       = ".".IO.resolve;
+my IO::Path $default-to     = $base-dir.child: "perl6-modules";
+my IO::Path $default-meta   = $base-dir.child: "META6.json";
 
 my \default-meta = {
 	scripts       => {
@@ -26,19 +28,19 @@ my \default-meta = {
 	source-url    => ""
 };
 
-sub read-meta(IO::Path :meta($_) = $meta) {
-    do if .e {
-        from-json .slurp
+sub read-meta(IO::Path :$meta = $default-meta) {
+    do if $meta.e {
+        from-json $meta.slurp
     } else {
 		default-meta
     }
 }
 
-sub create-meta(\data, IO::Path :meta($_) = $meta) {
-    .spurt: to-json data
+sub create-meta(\data, IO::Path :$meta = $default-meta) {
+    $meta.spurt: to-json data
 }
 
-sub run-zef(+@argv, :to($inst-to) = $to.path, *%pars) {
+sub run-zef(+@argv, :$to = $default-to.path, *%pars) {
     my @pars = %pars.kv.map: -> $k, $v {
         my $par = $k.chars == 1 ?? "-" !! "--";
         do if $v ~~ Bool {
@@ -47,13 +49,14 @@ sub run-zef(+@argv, :to($inst-to) = $to.path, *%pars) {
             "$par$k=$v"
         }
     }
-    my $cmd = "zef --to=inst#$inst-to @pars[] @argv[]";
+    my $cmd = "zef --to=inst#$to @pars[] @argv[]";
+    note $cmd if $debug;
     shell $cmd
 }
 
 multi MAIN("init") {
     my $m = read-meta;
-    unless $meta.f {
+    unless $default-meta.f {
         if prompt "Project name [{$m<name>}]: " -> $name {
             $m<name> = $name
         }
@@ -69,13 +72,13 @@ multi MAIN("init") {
 
 multi MAIN("install", Bool :f(:$force)) {
 	if read-meta() -> $m {
-        nextwith "install", |$m<depends>, :$force
+        MAIN "install", |$m<depends>, :$force if $m<depends>.elems > 0
 	} else {
 		die "Deu ruim";
 	}
 }
-multi MAIN("install", *@modules, Bool :f(:$force), Bool :$save) {
-    if run-zef "install", |@modules, :to($to.path), :$force {
+multi MAIN("install", +@modules, Bool :f(:$force), Bool :$save) {
+    if run-zef "install", |@modules, :to($default-to.path), :$force {
         if $save {
             my $m = read-meta;
             $m<depends>.append: @modules;
@@ -86,14 +89,14 @@ multi MAIN("install", *@modules, Bool :f(:$force), Bool :$save) {
         die "Deu ruim"
     }
 }
-multi MAIN("exec", *@argv) {
-    %*ENV<PERL6LIB> = "inst#{$to.path}";
-    %*ENV<PATH>    ~= ":{$to.path}/bin";
+multi MAIN("exec", +@argv) {
+    %*ENV<PERL6LIB> = "inst#{$default-to.path}";
+    %*ENV<PATH>    ~= ":{$default-to.path}/bin";
     run @argv
 }
 multi MAIN("run", Str $script) {
-    %*ENV<PERL6LIB> = "inst#{$to.path}";
-    %*ENV<PATH>    ~= ":{$to.path}/bin";
+    %*ENV<PERL6LIB> = "inst#{$default-to.path}";
+    %*ENV<PATH>    ~= ":{$default-to.path}/bin";
     shell $_ with read-meta.<scripts>{$script}
 }
 enum Scripts <test start stop>;
