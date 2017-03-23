@@ -79,6 +79,7 @@ multi MAIN("install", *@modules, Bool :f(:$force), Bool :$save) {
         if $save {
             my $m = read-meta;
             $m<depends>.append: @modules;
+            $m.<depends> .= unique;
             create-meta $m
         }
     } else {
