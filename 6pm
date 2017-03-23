@@ -2,13 +2,16 @@
 use v6;
 use JSON::Fast;
 
-my IO::Path $base-dir   = ".".IO;
+my IO::Path $base-dir   = ".".IO.resolve;
 my IO::Path $to         = $base-dir.child: "perl6-modules";
 my IO::Path $meta       = $base-dir.child: "META6.json";
 
 my \default-meta = {
+	scripts       => {
+		test => "zef test .",
+	},
 	perl          => "6.*",
-	name          => "",
+	name          => $base-dir.basename,
 	version       => "0.0.1",
 	description   => "",
 	authors       => [ "{%*ENV<USER>}" ],
@@ -51,8 +54,14 @@ sub run-zef(+@argv, :to($inst-to) = $to.path, *%pars) {
 multi MAIN("init") {
     my $m = read-meta;
     unless $meta.f {
-        if prompt "Project name: " -> $name {
+        if prompt "Project name [{$m<name>}]: " -> $name {
             $m<name> = $name
+        }
+        if prompt "Project tags: " -> $tags {
+            $m<tags> = $tags.split(/\s/).grep: *.elems > 0
+        }
+        if prompt "perl6 version [{$m<perl>}]: " -> $_ {
+            $m<perl> = $_ if /^ 'v6' ['.' <[a..z]>+] $/
         }
         create-meta $m
     }
@@ -64,7 +73,6 @@ multi MAIN("install", Bool :f(:$force)) {
 	} else {
 		die "Deu ruim";
 	}
-	
 }
 multi MAIN("install", *@modules, Bool :f(:$force), Bool :$save) {
     if run-zef "install", |@modules, :to($to.path), :$force {
@@ -77,7 +85,13 @@ multi MAIN("install", *@modules, Bool :f(:$force), Bool :$save) {
         die "Deu ruim"
     }
 }
-multi MAIN("exec", *@modules) {
+multi MAIN("exec", *@argv) {
     %*ENV<PERL6LIB> = "inst#{$to.path}";
-    run @modules
+    %*ENV<PATH>    ~= ":{$to.path}/bin";
+    run @argv
+}
+multi MAIN("run", $script) {
+    %*ENV<PERL6LIB> = "inst#{$to.path}";
+    %*ENV<PATH>    ~= ":{$to.path}/bin";
+    shell $_ with read-meta.<scripts>{$script}
 }
