@@ -6,26 +6,28 @@ my IO::Path $base-dir   = ".".IO;
 my IO::Path $to         = $base-dir.child: "perl6-modules";
 my IO::Path $meta       = $base-dir.child: "META6.json";
 
+my \default-meta = {
+	perl          => "6.*",
+	name          => "",
+	version       => "0.0.1",
+	description   => "",
+	authors       => [ "{%*ENV<USER>}" ],
+	tags          => [ ],
+	provides      => { },
+	depends       => [ ],
+	test-depends  => [
+		"Test",
+		"Test::META"
+   ],
+	resources     => [ ],
+	source-url    => ""
+};
+
 sub read-meta(IO::Path :meta($_) = $meta) {
     do if .e {
         from-json .slurp
     } else {
-		{
-			perl          => "6.*",
-			name          => "",
-			version       => "0.0.1",
-			description   => "",
-			authors       => [ "{%*ENV<USER>}" ],
-			tags          => [ ],
-			provides      => { },
-			depends       => [ ],
-			test-depends  => [
-				"Test",
-				"Test::META"
-		   ],
-			resources     => [ ],
-			source-url    => ""
-		}
+		default-meta
     }
 }
 
@@ -77,5 +79,5 @@ multi MAIN("install", *@modules, Bool :f(:$force), Bool :$save) {
 }
 multi MAIN("exec", *@modules) {
     %*ENV<PERL6LIB> = "inst#{$to.path}";
-    shell "@modules[]"
+    run @modules
 }
