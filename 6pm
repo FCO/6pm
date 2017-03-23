@@ -91,8 +91,12 @@ multi MAIN("exec", *@argv) {
     %*ENV<PATH>    ~= ":{$to.path}/bin";
     run @argv
 }
-multi MAIN("run", $script) {
+multi MAIN("run", Str $script) {
     %*ENV<PERL6LIB> = "inst#{$to.path}";
     %*ENV<PATH>    ~= ":{$to.path}/bin";
     shell $_ with read-meta.<scripts>{$script}
+}
+enum Scripts <test start stop>;
+multi MAIN(Scripts $script) {
+	MAIN "run", $script.key
 }
