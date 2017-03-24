@@ -1,44 +1,12 @@
 #!/usr/bin/env perl6
 use v6;
-use JSON::Fast;
+use App::six-pm::Meta6;
 
 my $debug = so %*ENV<_6PM_DEBUG>;
 
 my IO::Path $base-dir       = ".".IO.resolve;
 my IO::Path $default-to     = $base-dir.child: "perl6-modules";
-my IO::Path $default-meta   = $base-dir.child: "META6.json";
-
-my \default-meta = {
-	scripts       => {
-		test => "zef test .",
-	},
-	perl          => "6.*",
-	name          => $base-dir.basename,
-	version       => "0.0.1",
-	description   => "",
-	authors       => [ "{%*ENV<USER>}" ],
-	tags          => [ ],
-	provides      => { },
-	depends       => [ ],
-	test-depends  => [
-		"Test",
-		"Test::META"
-   ],
-	resources     => [ ],
-	source-url    => ""
-};
-
-sub read-meta(IO::Path :$meta = $default-meta) {
-    do if $meta.e {
-        from-json $meta.slurp
-    } else {
-		default-meta
-    }
-}
-
-sub create-meta(\data, IO::Path :$meta = $default-meta) {
-    $meta.spurt: to-json data
-}
+my App::six-pm::Meta6 $meta.= load: $base-dir.child: "META6.json";
 
 sub run-zef(+@argv, :$to = $default-to.path, *%pars) {
     my @pars = %pars.kv.map: -> $k, $v {
@@ -55,24 +23,23 @@ sub run-zef(+@argv, :$to = $default-to.path, *%pars) {
 }
 
 multi MAIN("init") {
-    my $m = read-meta;
-    unless $default-meta.f {
-        if prompt "Project name [{$m<name>}]: " -> $name {
-            $m<name> = $name
+    unless $meta {
+        if prompt "Project name [{$meta.name}]: " -> $name {
+            $meta.name = $name
         }
         if prompt "Project tags: " -> $tags {
-            $m<tags> = $tags.split(/\s/).grep: *.elems > 0
+            $meta.tags = $tags.split(/\s/).grep: *.elems > 0
         }
-        if prompt "perl6 version [{$m<perl>}]: " -> $_ {
-            $m<perl> = $_ if /^ 'v6' ['.' <[a..z]>+] $/
+        if prompt "perl6 version [{$meta.perl}]: " -> $_ {
+            $meta.perl = $_ if /^ 'v6' ['.' <[a..z]>+] $/
         }
-        create-meta $m
+        $meta.save
     }
 }
 
 multi MAIN("install", Bool :f(:$force)) {
-	if read-meta() -> $m {
-        MAIN "install", |$m<depends>, :$force if $m<depends>.elems > 0
+	if $meta {
+        MAIN "install", |$meta.depends, :$force if $meta.depends.elems > 0
 	} else {
 		die "Deu ruim";
 	}
@@ -80,10 +47,8 @@ multi MAIN("install", Bool :f(:$force)) {
 multi MAIN("install", +@modules, Bool :f(:$force), Bool :$save) {
     if run-zef "install", |@modules, :to($default-to.path), :$force {
         if $save {
-            my $m = read-meta;
-            $m<depends>.append: @modules;
-            $m.<depends> .= unique;
-            create-meta $m
+            $meta.add-dependency: @modules;
+            $meta.save
         }
     } else {
         die "Deu ruim"
@@ -97,7 +62,7 @@ multi MAIN("exec", +@argv) {
 multi MAIN("run", Str $script) {
     %*ENV<PERL6LIB> = "inst#{$default-to.path}";
     %*ENV<PATH>    ~= ":{$default-to.path}/bin";
-    shell $_ with read-meta.<scripts>{$script}
+    shell $_ with $meta.scripts{$script}
 }
 enum Scripts <test start stop>;
 multi MAIN(Scripts $script) {
