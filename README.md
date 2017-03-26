@@ -24,7 +24,7 @@ $ 6pm install Heap
 ## Locally install a Module and add it on depends of META6.json
 
 ```
-$ 6pm --save install Heap
+$ 6pm install Heap --save
 ===> Searching for: Heap
 ===> Testing: Heap:ver('0.0.1')
 ===> Testing [OK]: Heap:ver('0.0.1')
@@ -34,7 +34,7 @@ $ 6pm --save install Heap
 ## Run a code using the local dependencies
 
 ```
-$ 6pm exec perl6 -MHeap -e 'say Heap.new: <q w e r>'
+$ 6pm exec -- perl6 -MHeap -e 'say Heap.new: <q w e r>'
 Heap.new: [e r q w]
 ```
 

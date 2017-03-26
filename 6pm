@@ -1,8 +1,9 @@
 #!/usr/bin/env perl6
 use v6;
 use App::six-pm::Meta6;
+my $*MAIN-ALLOW-NAMED-ANYWHERE = True;
 
-my $debug = so %*ENV<_6PM_DEBUG>;
+my $*DEBUG = so %*ENV<_6PM_DEBUG>;
 
 my IO::Path $base-dir       = ".".IO.resolve;
 my IO::Path $default-to     = $base-dir.child: "perl6-modules";
@@ -18,7 +19,7 @@ sub run-zef(+@argv, :$to = $default-to.path, *%pars) {
         }
     }
     my $cmd = "zef --to=inst#$to @pars[] @argv[]";
-    note $cmd if $debug;
+    note $cmd if $*DEBUG;
     shell $cmd
 }
 
