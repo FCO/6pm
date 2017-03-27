@@ -55,12 +55,16 @@ multi MAIN("install", +@modules, Bool :f(:$force), Bool :$save) {
         die "Deu ruim"
     }
 }
+multi MAIN("exec", +@argv, *%pars where *.elems >= 1) is hidden-from-USAGE {
+    die "Please, use -- before the command"
+}
+
 multi MAIN("exec", +@argv) {
     %*ENV<PERL6LIB> = "inst#{$default-to.path}";
     %*ENV<PATH>    ~= ":{$default-to.path}/bin";
     run @argv
 }
-multi MAIN("run", Str $script) {
+multi MAIN("run", Str() $script) {
     %*ENV<PERL6LIB> = "inst#{$default-to.path}";
     %*ENV<PATH>    ~= ":{$default-to.path}/bin";
     shell $_ with $meta.scripts{$script}
