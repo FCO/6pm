@@ -28,11 +28,11 @@ has Str         %.scripts           is json-skip-null is rw    = {
     test => "zef test ."
 }
 
-method new(IO::Path $file) {
+method new(IO::Path:D $file) {
     do if $file.f {
-        self.from-json: $file.slurp
+        ::?CLASS.from-json: $file.slurp
     } else {
-        self.bless(:$file)
+        ::?CLASS.bless(:$file)
     }
 }
 
