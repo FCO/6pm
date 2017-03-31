@@ -2,7 +2,7 @@ use JSON::Class;
 
 unit class App::six-pm::Meta6 does JSON::Class;
 
-has IO::Path $.file handles <f e d x>;
+has IO::Path $!file handles <f e d x> = "./META6.json".IO;
 
 has Str     $.meta6                 is json-skip-null is rw;
 has Str     $.perl                  is json-skip-null is rw    = "v6.*";
@@ -28,19 +28,24 @@ has Str         %.scripts           is json-skip-null is rw    = {
     test => "zef test ."
 }
 
-method new(IO::Path:D $file) {
-    do if $file.f {
-        ::?CLASS.from-json: $file.slurp
+method set-file($!file) {}
+
+method create(IO::Path:D $file) {
+    my ::?CLASS:D $obj;
+    if $file.f {
+        $obj = ::?CLASS.from-json: $file.slurp
     } else {
-        ::?CLASS.bless(:$file)
+        $obj = ::?CLASS.bless;
     }
+    $obj.set-file: $file;
+    $obj
 }
 
 method save() {$!file.spurt: $.to-json; self}
 
 method add-dependency(*@dep) {
-    $.depends.append: @dep;
-    $.depends .= unique;
+    @!depends.append: @dep;
+    @!depends .= unique;
 }
 
 method Bool(--> Bool()) {self.?f}
