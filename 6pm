@@ -7,7 +7,7 @@ my $*DEBUG = so %*ENV<_6PM_DEBUG>;
 
 my IO::Path $base-dir       = ".".IO.resolve;
 my IO::Path $default-to     = $base-dir.child: "perl6-modules";
-my App::six-pm::Meta6 $meta.= load: $base-dir.child: "META6.json";
+my App::six-pm::Meta6 $meta.= new: $base-dir.child: "META6.json";
 
 sub run-zef(+@argv, :$to = $default-to.path, *%pars) {
     my @pars = %pars.kv.map: -> $k, $v {
