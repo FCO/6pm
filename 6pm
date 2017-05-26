@@ -62,7 +62,7 @@ multi MAIN("exec", +@argv, *%pars where *.elems >= 1) is hidden-from-USAGE {
 multi MAIN("exec", +@argv) {
     %*ENV<PERL6LIB> = "inst#{$default-to.path}";
     %*ENV<PATH>    ~= ":{$default-to.path}/bin";
-    run @argv
+    run |@argv
 }
 multi MAIN("run", Str() $script) {
     %*ENV<PERL6LIB> = "inst#{$default-to.path}";
