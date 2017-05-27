@@ -2,20 +2,24 @@ use App::six-pm::Meta6;
 class SixPM {
 	has IO::Path           $.base-dir   = ".".IO.resolve;
 	has IO::Path           $.default-to = $!base-dir.child: "perl6-modules";
-	has App::six-pm::Meta6 $!meta      .= create: $!base-dir.child: "META6.json";
+	has App::six-pm::Meta6 $.meta      .= create: $!base-dir.child: "META6.json";
 
-	has Bool $.DEBUG = True;
+	has Bool $.DEBUG = False;
+
+	method get-project-name  { prompt "Project name [{$!meta.name}]: " }
+	method get-project-tags  { prompt "Project tags: " }
+	method get-perl6-version { prompt "perl6 version [{$!meta.perl}]: " }
 
 	method init {
 		unless $!meta {
-			if prompt "Project name [{$!meta.name}]: " -> $name {
-				$!meta.name = $name
+			if $.get-project-name -> $name {
+				try $!meta.name = $name
 			}
-			if prompt "Project tags: " -> $tags {
-				$!meta.tags = $tags.split(/\s/).grep: *.elems > 0
+			if $.get-project-tags -> $tags {
+				try $!meta.tags = $tags.split(/\s/).grep: *.elems > 0
 			}
-			if prompt "perl6 version [{$!meta.perl}]: " -> $_ {
-				$!meta.perl = $_ if /^ 'v6' ['.' <[a..z]>+] $/
+			if $.get-perl6-version -> $_ {
+				try $!meta.perl = $_ if /^ 'v6' ['.' <[a..z]>+] $/
 			}
 			$!meta.save
 		}
