@@ -31,9 +31,6 @@ sub name is rw { state $a }
 			returning => {
 				"Bool"              => False,
 			},
-			overriding => {
-				"name"              => &name,
-			}
 		);
 
 		my $_6pm = SixPM.new: :$meta;

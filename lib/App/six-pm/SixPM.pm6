@@ -13,13 +13,13 @@ class SixPM {
 	method init {
 		unless $!meta {
 			if $.get-project-name -> $name {
-				try $!meta.name = $name
+				$!meta.name = $name
 			}
 			if $.get-project-tags -> $tags {
-				try $!meta.tags = $tags.split(/\s/).grep: *.elems > 0
+				$!meta.tags = $tags.split(/\s/).grep: *.elems > 0
 			}
 			if $.get-perl6-version -> $_ {
-				try $!meta.perl = $_ if /^ 'v6' ['.' <[a..z]>+] $/
+				$!meta.perl = $_ if /^ 'v6' ['.' <[a..z]>+] $/
 			}
 			$!meta.save
 		}
