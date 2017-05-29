@@ -1,26 +1,23 @@
 use App::six-pm::Meta6;
+use App::six-pm::Installer;
+use App::six-pm::ZefInstaller;
 class SixPM {
 	has IO::Path           $.base-dir   = ".".IO.resolve;
 	has IO::Path           $.default-to = $!base-dir.child: "perl6-modules";
 	has App::six-pm::Meta6 $.meta      .= create: $!base-dir.child: "META6.json";
 
-	has Bool $.DEBUG = False;
+	has Bool      $.DEBUG     = False;
+	has Installer $.installer = ZefInstaller.new: :$!default-to, :$!DEBUG;
 
 	method get-project-name  { prompt "Project name [{$!meta.name}]: " }
 	method get-project-tags  { prompt "Project tags: " }
 	method get-perl6-version { prompt "perl6 version [{$!meta.perl}]: " }
 
-	method init {
+	method init(:$name, :@tags, :$perl-version) {
 		unless $!meta {
-			if $.get-project-name -> $name {
-				$!meta.name = $name
-			}
-			if $.get-project-tags -> $tags {
-				$!meta.tags = $tags.split(/\s/).grep: *.elems > 0
-			}
-			if $.get-perl6-version -> $_ {
-				$!meta.perl = $_ if /^ 'v6' ['.' <[a..z]>+] $/
-			}
+			$!meta.name = $name // $.get-project-name;
+			$!meta.tags = @tags || $.get-project-tags.words;
+			$!meta.perl = $perl-version // $.get-perl6-version;
 			$!meta.save
 		}
 	}
@@ -34,7 +31,7 @@ class SixPM {
 	}
 
 	method install(+@modules, Bool :f(:$force), Bool :$save) {
-		if $.run-zef("install", |@modules, :to($!default-to.path), :$force) {
+		if $.installer.install(|@modules, :to($!default-to.path), :$force) {
 			if $save {
 				$!meta.add-dependency: @modules;
 				$!meta.save
@@ -54,19 +51,5 @@ class SixPM {
 		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
 		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
 		shell $_ with $!meta.scripts{$script}
-	}
-
-	method run-zef(+@argv, :$to = $!default-to.path, *%pars) {
-		my @pars = %pars.kv.map: -> $k, $v {
-			my $par = $k.chars == 1 ?? "-" !! "--";
-			do if $v ~~ Bool {
-				"{$par}{$v ?? "" !! "/"}$k" if $v.DEFINITE
-			} else {
-				"$par$k=$v"
-			}
-		}
-		my $cmd = "zef --to=inst#$to @pars[] @argv[]";
-		note $cmd if $!DEBUG;
-		shell $cmd
 	}
 }
