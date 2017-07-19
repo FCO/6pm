@@ -23,6 +23,8 @@ class SixPM {
 	}
 
 	method install-deps(Bool :f(:$force)) {
+		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
+		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
 		if $!meta and $!meta.depends.elems > 0 {
 			$.install(|$!meta.depends, :$force)
 		} else {
@@ -31,6 +33,8 @@ class SixPM {
 	}
 
 	method install(+@modules, Bool :f(:$force), Bool :$save) {
+		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
+		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
 		if $.installer.install(|@modules, :to($!default-to.path), :$force) {
 			if $save {
 				$!meta.add-dependency: @modules;
