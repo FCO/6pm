@@ -46,7 +46,7 @@
     "App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.pm6"
   },
   "production": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "supersedes": {
     
   },
