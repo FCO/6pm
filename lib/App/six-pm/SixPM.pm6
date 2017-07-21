@@ -26,18 +26,20 @@ class SixPM {
 		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
 		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
 		if $!meta and $!meta.depends.elems > 0 {
-			$.install(|$!meta.depends, :$force)
+			$.install(|$!meta.build-depends, |$!meta.test-depends, |$!meta.depends, :$force)
 		} else {
 			die "Deu ruim";
 		}
 	}
 
-	method install(+@modules, Bool :f(:$force), Bool :$save) {
+	method install(+@modules, Bool :f(:$force), Bool :$save, Bool :$save-test, Bool :$save-build) {
 		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
 		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
 		if $.installer.install(|@modules, :to($!default-to.path), :$force) {
 			if $save {
 				$!meta.add-dependency: @modules;
+				$!meta.add-test-dependency: @modules;
+				$!meta.add-build-dependency: @modules;
 				$!meta.save
 			}
 		} else {

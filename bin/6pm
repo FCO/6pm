@@ -19,8 +19,8 @@ multi MAIN("install", Bool :f(:$force)) {
 	$six-pm.install-deps: :$force
 }
 
-multi MAIN("install", +@modules, Bool :f(:$force), Bool :$save) {
-	$six-pm.install: @modules, :$force, :$save
+multi MAIN("install", +@modules, Bool :f(:$force), Bool :$save, Bool :$save-test, Bool :$save-build) {
+	$six-pm.install: @modules, :$force, :$save, :$save-test, :$save-build
 }
 
 multi MAIN("exec", +@argv, *%pars where *.elems >= 1) is hidden-from-USAGE {

@@ -48,4 +48,14 @@ method add-dependency(*@dep) {
     @!depends .= unique;
 }
 
+method add-test-dependency(*@dep) {
+    @!test-depends.append: @dep;
+    @!test-depends .= unique;
+}
+
+method add-build-dependency(*@dep) {
+    @!build-depends.append: @dep;
+    @!build-depends .= unique;
+}
+
 method Bool(--> Bool()) {self.?f}

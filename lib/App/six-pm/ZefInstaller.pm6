@@ -17,6 +17,6 @@ class ZefInstaller does Installer {
 		}
 		my $cmd = "zef --to=inst#$to @pars[] @argv[]";
 		note $cmd if $!DEBUG;
-		shell $cmd
+		shell $cmd, :err($*ERR), :out($*OUT)
 	}
 }
