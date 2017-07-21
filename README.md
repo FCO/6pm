@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/FCO/6pm.svg?branch=master)](https://travis-ci.org/FCO/6pm)
 # 🕕 - 6pm
 
 ## Create META6.json
