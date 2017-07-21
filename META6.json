@@ -27,8 +27,13 @@
     "JSON::Class"
   ],
   "tags": [
-    "package",
-    "install"
+    "PACKAGE",
+    "INSTALL",
+    "CLI",
+    "DEVEL",
+    "TERMINAL",
+    "UTILS",
+    "COMMAND LINE"
   ],
   "license": "https://opensource.org/licenses/Artistic-2.0",
   "test-depends": [
