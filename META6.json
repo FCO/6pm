@@ -53,5 +53,5 @@
   "authors": [
     "Fernando Corrêa de Oliveira"
   ],
-  "description": ""
+  "description": "Perl6 module dependency manager (aka npm for Perl6)"
 }
