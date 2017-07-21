@@ -32,13 +32,20 @@ $ 6pm install Heap --save
 ===> Installing: Heap:ver('0.0.1')
 ```
 
-## Run a code using the local dependencies
+## Run code using the local dependencies
 
 ```
 $ 6pm exec -- perl6 -MHeap -e 'say Heap.new: <q w e r>'
 Heap.new: [e r q w]
 ```
 
+## Run a file using the local dependencies
+
+```
+$ echo "use Heap; say Heap.new: <q w e r>" > bla.p6
+$ 6pm exec-file bla.p6
+Heap.new: [e r q w]
+```
 
 ## Running scripts
 
