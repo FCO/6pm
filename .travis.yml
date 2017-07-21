@@ -1,0 +1,9 @@
+language: perl6
+perl6:
+  - latest
+install:
+  - rakudobrew build-panda
+  - zef install . --deps-only
+script:
+  - PERL6_TEST_META=1 PERL6LIB=$PWD/lib zef test .
+sudo: false
