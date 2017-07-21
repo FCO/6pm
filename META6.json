@@ -1,40 +1,52 @@
 {
-  "name":          "SixPM",
-  "support":       {},
-  "emulates":      {},
-  "perl":          "v6.*",
-  "resources":     {},
-  "build-depends": [],
-  "scripts":       {
+  "name": "SixPM",
+  "support": {
+    
+  },
+  "emulates": {
+    
+  },
+  "perl": "v6.*",
+  "resources": {
+    
+  },
+  "build-depends": [
+    
+  ],
+  "scripts": {
     "test": "zef test ."
   },
-  "excludes":      {},
-  "superseded-by": {},
-  "depends":       [
-    "zef"
-  ],
-  "tags":          [
-    "package",
-	"install"
-  ],
-  "bin": {
-	  "6pm": "bin/6pm"
+  "excludes": {
+    
   },
-  "license":       "https://opensource.org/licenses/Artistic-2.0",
-  "test-depends":  [
+  "superseded-by": {
+    
+  },
+  "depends": [
+    "zef",
+    "JSON::Class"
+  ],
+  "tags": [
+    "package",
+    "install"
+  ],
+  "license": "https://opensource.org/licenses/Artistic-2.0",
+  "test-depends": [
     "Test::Mock"
   ],
-  "provides":      {
-    "App::six-pm::Installer"    : "lib/App/six-pm/Installer.pm6",
-    "App::six-pm::Meta6"        : "lib/App/six-pm/Meta6.pm6",
-    "App::six-pm::SixPM"        : "lib/App/six-pm/SixPM.pm6",
-    "App::six-pm::ZefInstaller" : "lib/App/six-pm/ZefInstaller.pm6"
+  "provides": {
+    "App::six-pm::Installer": "lib/App/six-pm/Installer.pm6",
+    "App::six-pm::Meta6": "lib/App/six-pm/Meta6.pm6",
+    "App::six-pm::SixPM": "lib/App/six-pm/SixPM.pm6",
+    "App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.pm6"
   },
-  "production":    false,
-  "version":       "0.0.1",
-  "supersedes":    {},
-  "authors":       [
+  "production": false,
+  "version": "0.0.1",
+  "supersedes": {
+    
+  },
+  "authors": [
     "Fernando Corrêa de Oliveira"
   ],
-  "description":   ""
+  "description": ""
 }
