@@ -17,15 +17,18 @@
     "package",
 	"install"
   ],
+  "bin": {
+	  "6pm": "bin/6pm"
+  },
   "license":       "https://opensource.org/licenses/Artistic-2.0",
   "test-depends":  [
     "Test::Mock"
   ],
   "provides":      {
-    "Installer"    : "lib/App/six-pm/Installer.pm6",
-    "Meta6"        : "lib/App/six-pm/Meta6.pm6",
-    "SixPM"        : "lib/App/six-pm/SixPM.pm6",
-    "ZefInstaller" : "lib/App/six-pm/ZefInstaller.pm6"
+    "App::six-pm::Installer"    : "lib/App/six-pm/Installer.pm6",
+    "App::six-pm::Meta6"        : "lib/App/six-pm/Meta6.pm6",
+    "App::six-pm::SixPM"        : "lib/App/six-pm/SixPM.pm6",
+    "App::six-pm::ZefInstaller" : "lib/App/six-pm/ZefInstaller.pm6"
   },
   "production":    false,
   "version":       "0.0.1",
