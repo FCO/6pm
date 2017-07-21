@@ -35,9 +35,9 @@
     "UTILS",
     "COMMAND LINE"
   ],
-  "license": "https://spdx.org/licenses/Artistic-2.0.html",
+  "license": "Artistic-2.0",
   "test-depends": [
-    "Test::Mock",
+    "Test::Mock:ver<1.4>",
     "Test::META"
   ],
   "provides": {
@@ -47,7 +47,7 @@
     "App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.pm6"
   },
   "production": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "supersedes": {
     
   },

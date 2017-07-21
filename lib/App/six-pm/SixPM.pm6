@@ -25,8 +25,16 @@ class SixPM {
 	method install-deps(Bool :f(:$force)) {
 		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
 		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
-		if $!meta and $!meta.depends.elems > 0 {
-			$.install(|$!meta.build-depends, |$!meta.test-depends, |$!meta.depends, :$force)
+        say $!meta.test-depends;
+		if
+            $!meta and
+                (
+                    $!meta.depends.elems > 0
+                    or $!meta.test-depends.elems > 0
+                    or $!meta.build-depends.elems > 0
+                )
+        {
+			$.install(flat(|$!meta.build-depends, |$!meta.test-depends, |$!meta.depends), :$force)
 		} else {
 			die "Deu ruim";
 		}
