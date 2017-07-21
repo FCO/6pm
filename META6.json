@@ -1,7 +1,7 @@
 {
   "name": "6pm",
   "support": {
-    
+    "source": "git://github.com/FCO/6pm.git"
   },
   "emulates": {
     
