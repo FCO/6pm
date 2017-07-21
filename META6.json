@@ -35,7 +35,7 @@
     "UTILS",
     "COMMAND LINE"
   ],
-  "license": "https://opensource.org/licenses/Artistic-2.0",
+  "license": "https://spdx.org/licenses/Artistic-2.0.html",
   "test-depends": [
     "Test::Mock",
     "Test::META"
