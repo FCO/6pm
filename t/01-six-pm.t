@@ -95,8 +95,10 @@ sub name is rw { state $a }
 	subtest {
 		my $meta = mocked(App::six-pm::Meta6,
 			returning => {
-				"Bool"    => True,
-				"depends" => [<A B C>]
+				"Bool"          => True,
+				"depends"       => [<A B C>],
+                "test-depends"  => [<D E>],
+                "build-depends" => [<F G>]
 			},
 		);
 
@@ -104,7 +106,7 @@ sub name is rw { state $a }
 
 		$_6pm does role :: {
 			method install(*@mod, :$save) {
-				is-deeply @mod, [<A B C>];
+				is-deeply @mod.Set, set <A B C D E F G>;
 				nok $save;
 			}
 		}
@@ -118,7 +120,9 @@ sub name is rw { state $a }
 		my $meta = mocked(App::six-pm::Meta6,
 			returning => {
 				"Bool"    => True,
-				"depends" => [<A B C>]
+				"depends"       => [<A B C>],
+                "test-depends"  => [<D E>],
+                "build-depends" => [<F G>]
 			},
 		);
 
@@ -126,7 +130,7 @@ sub name is rw { state $a }
 
 		$_6pm does role :: {
 			method install(+@mod, :$force, :$save) {
-				is-deeply @mod, [<A B C>];
+				is-deeply @mod.Set, set <A B C D E F G>;
 				ok $force;
 				nok $save;
 			}
