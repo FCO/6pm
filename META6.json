@@ -1,7 +1,7 @@
 {
   "name": "6pm",
   "support": {
-    "source": "git://github.com/FCO/6pm.git"
+    
   },
   "emulates": {
     
@@ -44,12 +44,12 @@
     "App::six-pm::Installer": "lib/App/six-pm/Installer.pm6",
     "App::six-pm::Meta6": "lib/App/six-pm/Meta6.pm6",
     "App::six-pm::SixPM": "lib/App/six-pm/SixPM.pm6",
-    "App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.pm6"
+    "App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.pm6",
+	"SixPM": "lib/SixPM.pm6"
   },
   "production": false,
   "version": "0.0.5",
   "supersedes": {
-    
   },
   "authors": [
     "Fernando Corrêa de Oliveira"
