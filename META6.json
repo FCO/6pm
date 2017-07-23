@@ -1,58 +1,61 @@
 {
-  "name": "6pm",
-  "support": {
-    "source": "git://github.com/FCO/6pm.git"
-  },
-  "emulates": {
-    
-  },
-  "perl": "v6.*",
-  "resources": {
-    
-  },
-  "build-depends": [
-    
-  ],
-  "scripts": {
-    "test": "zef test ."
-  },
-  "excludes": {
-    
-  },
-  "superseded-by": {
-    
-  },
-  "depends": [
-    "zef",
-    "JSON::Class"
-  ],
-  "tags": [
-    "PACKAGE",
-    "INSTALL",
-    "CLI",
-    "DEVEL",
-    "TERMINAL",
-    "UTILS",
-    "COMMAND LINE"
-  ],
-  "license": "Artistic-2.0",
-  "test-depends": [
-    "Test::Mock:ver<1.4>",
-    "Test::META"
-  ],
-  "provides": {
-    "App::six-pm::Installer": "lib/App/six-pm/Installer.pm6",
-    "App::six-pm::Meta6": "lib/App/six-pm/Meta6.pm6",
-    "App::six-pm::SixPM": "lib/App/six-pm/SixPM.pm6",
-    "App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.pm6",
-	"SixPM": "lib/SixPM.pm6"
-  },
-  "production": false,
-  "version": "0.0.5",
-  "supersedes": {
-  },
-  "authors": [
-    "Fernando Corrêa de Oliveira"
+	"name": "6pm",
+	"support": {
+		"source": "git://github.com/FCO/6pm.git"
+	},
+	"bin": {
+		"6pm": "bin/6pm"
+	},
+	"emulates": {
+
+	},
+	"perl": "v6.*",
+	"resources": {
+
+	},
+	"build-depends": [
+
+	],
+	"scripts": {
+		"test": "zef test ."
+	},
+	"excludes": {
+
+	},
+	"superseded-by": {
+
+	},
+	"depends": [
+		"zef",
+		"JSON::Class"
+	],
+	"tags": [
+		"PACKAGE",
+		"INSTALL",
+		"CLI",
+		"DEVEL",
+		"TERMINAL",
+		"UTILS",
+		"COMMAND LINE"
+	],
+	"license": "Artistic-2.0",
+	"test-depends": [
+		"Test::Mock:ver<1.4>",
+		"Test::META"
+	],
+	"provides": {
+		"App::six-pm::Installer": "lib/App/six-pm/Installer.pm6",
+		"App::six-pm::Meta6": "lib/App/six-pm/Meta6.pm6",
+		"App::six-pm::SixPM": "lib/App/six-pm/SixPM.pm6",
+		"App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.pm6",
+		"SixPM": "lib/SixPM.pm6"
+	},
+	"production": false,
+	"version": "0.0.5",
+	"supersedes": {
+	},
+	"authors": [
+		"Fernando Corrêa de Oliveira"
   ],
   "description": "Perl6 module dependency manager (aka npm for Perl6)"
 }
