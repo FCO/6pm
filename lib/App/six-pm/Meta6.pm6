@@ -9,7 +9,7 @@ has Str     $.perl                  is json-skip-null is rw    = "v6.*";
 has Str     $.name                  is json-skip-null is rw    = ".".IO.resolve.basename;
 has Str     $.version               is json-skip-null is rw    = "0.0.1";
 has Str     $.description           is json-skip-null is rw    = "";
-has Str     @.authors               is json-skip-null is rw    = [%*ENV<USER>];
+has Str     @.authors               is json-skip-null is rw    = [%*ENV<USER> // Empty];
 has Str     %.provides              is json-skip-null is rw;
 has Str     %.emulates              is json-skip-null is rw;
 has Str     %.supersedes            is json-skip-null is rw;
