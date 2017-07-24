@@ -5,7 +5,7 @@ while $cwd.resolve.absolute !~~ "/" {
 	my $p6m = $cwd.child("perl6-modules");
 	if $p6m.d {
 		use MONKEY-SEE-NO-EVAL;
-		EVAL "use lib '{$p6m.absolute}'";
+		EVAL "use lib 'inst#{$p6m.absolute}'";
 		last
 	}
 	$cwd .= parent
