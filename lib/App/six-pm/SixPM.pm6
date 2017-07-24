@@ -11,14 +11,14 @@ class SixPM {
 	has Installer $.installer = ZefInstaller.new: :$!default-to, :$!DEBUG;
 
 	method get-project-name  { prompt "Project name [{$!meta.name}]: " }
-	method get-project-tags  { prompt("Project tags: ").split: " " }
+	method get-project-tags  { prompt("Project tags: ") }
 	method get-perl6-version { prompt "perl6 version [{$!meta.perl}]: " }
 
 	method init(:$name, :@tags, :$perl-version) {
 		unless $!meta {
-			$!meta.name = $name // $.get-project-name;
+			$!meta.name = $name // $.get-project-name || $!meta.name;
 			$!meta.tags = @tags || $.get-project-tags.words;
-			$!meta.perl = $perl-version // $.get-perl6-version;
+			$!meta.perl = $perl-version // $.get-perl6-version || $!meta.perl;
 			$!meta.save
 		}
 	}
