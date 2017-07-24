@@ -10,7 +10,6 @@ my IO::Path $default-to = $base-dir.child: "perl6-modules";
 
 my $six-pm = SixPM.new: :$base-dir, :$default-to;
 
-
 multi MAIN("init") {
 	$six-pm.init
 }
