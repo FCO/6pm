@@ -7,7 +7,6 @@ sub find-sixpm-path($cwd is copy = $*PROGRAM.resolve.parent) {
 		return $p6m.resolve if $p6m.d;
 		$cwd .= parent
 	} while $cwd.resolve.absolute !~~ "/";
-	Empty
 }
 
 sub EXPORT($find-path?) {
