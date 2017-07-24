@@ -1,7 +1,8 @@
 use App::six-pm::Installer;
+use SixPM True;
 class ZefInstaller does Installer {
 	has $.DEBUG      = False;
-	has $.default-to = "./perl6-modules".IO;
+	has $.default-to = find-sixpm-path;
 	method install(+@argv, :$to = $!default-to, *%pars) {
 		$.run-zef("install", |@argv, :$to, |%pars)
 	}
@@ -15,7 +16,7 @@ class ZefInstaller does Installer {
 				"$par$k=$v"
 			}
 		}
-		my $cmd = "zef --to=inst#{$to.absolute} @pars[] @argv[]";
+		my $cmd = "zef --to=inst#{$to.?absolute // $to} @pars[] @argv[]";
 		note $cmd if $!DEBUG;
 		shell $cmd, :err($*ERR), :out($*OUT)
 	}

@@ -47,6 +47,14 @@ $ 6pm exec-file bla.p6
 Heap.new: [e r q w]
 ```
 
+## Make your code always use 6pm
+
+```
+$ echo "use SixPM; use Heap; say Heap.new: <q w e r>" > bla.p6
+$ perl6 bla.p6
+Heap.new: [e r q w]
+```
+
 ## Running scripts
 
 Add your script at your META6.json scripts field and run it with:
