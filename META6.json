@@ -51,7 +51,7 @@
 		"SixPM": "lib/SixPM.pm6"
 	},
 	"production": false,
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"supersedes": {
 	},
 	"authors": [
