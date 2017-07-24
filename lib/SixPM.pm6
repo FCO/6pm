@@ -1,18 +1,26 @@
 no precompilation;
 
-sub find-sixpm-path($cwd = $*PROGRAM.resolve.parent) is export<find-path> {
+sub find-sixpm-path($cwd is copy = $*PROGRAM.resolve.parent) {
 	repeat {
 		last if $++ > 10;
 		my $p6m = $cwd.child("perl6-modules");
-		return "inst#{$p6m.resolve.absolute}" if $p6m.d;
+		return $p6m.resolve if $p6m.d;
 		$cwd .= parent
 	} while $cwd.resolve.absolute !~~ "/";
 	Empty
 }
 
-if find-sixpm-path() -> $path {
-	use MONKEY-SEE-NO-EVAL;
-	EVAL "use lib '{$path}'";
-} else {
-	die "'perl6-modules' not found";
+sub EXPORT($find-path?) {
+	unless $find-path {
+		if find-sixpm-path() -> IO::Path $path {
+			use MONKEY-SEE-NO-EVAL;
+			EVAL "use lib 'inst#{$path.absolute}'";
+		} else {
+			die "'perl6-modules' not found";
+		}
+	}
+
+	{
+		'&find-sixpm-path' => &find-sixpm-path
+	}
 }

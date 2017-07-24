@@ -30,8 +30,8 @@ multi MAIN("exec", +@argv) {
 	$six-pm.exec: @argv
 }
 
-multi MAIN("exec-file", +@argv) {
-	$six-pm.exec: ["perl6", |@argv]
+multi MAIN("exec-file", $file, +@argv) {
+	$six-pm.exec: ["perl6", $file, |@argv], :path($file.IO);
 }
 
 multi MAIN("run", Str() $script) {

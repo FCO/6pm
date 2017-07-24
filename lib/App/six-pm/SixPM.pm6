@@ -1,9 +1,10 @@
 use App::six-pm::Meta6;
 use App::six-pm::Installer;
 use App::six-pm::ZefInstaller;
+use SixPM True;
 class SixPM {
 	has IO::Path           $.base-dir   = ".".IO.resolve;
-	has IO::Path           $.default-to = $!base-dir.child: "perl6-modules";
+	has IO::Path           $.default-to = find-sixpm-path $!base-dir;
 	has App::six-pm::Meta6 $.meta      .= create: $!base-dir.child: "META6.json";
 
 	has Bool      $.DEBUG     = False;
@@ -23,8 +24,8 @@ class SixPM {
 	}
 
 	method install-deps(Bool :f(:$force)) {
-		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
-		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
+		%*ENV<PERL6LIB> = "inst#{$!default-to.absolute}";
+		%*ENV<PATH>    ~= ":{$!default-to.absolute}/bin";
 		if
 			$!meta and
 				(
@@ -40,9 +41,9 @@ class SixPM {
 	}
 
 	method install(+@modules, Bool :f(:$force), Bool :$save, Bool :$save-test, Bool :$save-build) {
-		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
-		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
-		if $.installer.install(|@modules, :to($!default-to.path), :$force) {
+		%*ENV<PERL6LIB> = "inst#{$!default-to.absolute}";
+		%*ENV<PATH>    ~= ":{$!default-to.absolute}/bin";
+		if $.installer.install(|@modules, :to($!default-to.absolute), :$force) {
 			if $save {
 				$!meta.add-dependency: @modules;
 				$!meta.add-test-dependency: @modules;
@@ -54,15 +55,20 @@ class SixPM {
 		}
 	}
 
-	method exec(+@argv) {
-		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
-		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
+	method exec(+@argv, IO::Path :$path) {
+		my $inst = do with $path {
+			find-sixpm-path $path
+		} else {
+			$!default-to.absolute
+		}
+		%*ENV<PERL6LIB> = "inst#{$inst}";
+		%*ENV<PATH>    ~= ":{$inst}/bin";
 		run |@argv
 	}
 
 	method run(Str() $script) {
-		%*ENV<PERL6LIB> = "inst#{$!default-to.path}";
-		%*ENV<PATH>    ~= ":{$!default-to.path}/bin";
+		%*ENV<PERL6LIB> = "inst#{$!default-to.absolute}";
+		%*ENV<PATH>    ~= ":{$!default-to.absolute}/bin";
 		shell $_ with $!meta.scripts{$script}
 	}
 }
