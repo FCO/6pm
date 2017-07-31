@@ -16,9 +16,21 @@ class SixPM {
 
 	method init(:$name, :@tags, :$perl-version) {
 		unless $!meta {
-			$!meta.name = $name // $.get-project-name || $!meta.name;
+			with $name -> $name {
+				$!meta.name = $name
+			} else {
+				if $.get-project-name -> $name {
+					$!meta.name = $name
+				}
+			}
 			$!meta.tags = @tags || $.get-project-tags.words;
-			$!meta.perl = $perl-version // $.get-perl6-version || $!meta.perl;
+			with $perl-version -> $perl {
+				$!meta.perl = $perl
+			} else {
+				if $.get-perl6-version -> $perl {
+					$!meta.perl = $perl
+				}
+			}
 			$!meta.save
 		}
 	}
