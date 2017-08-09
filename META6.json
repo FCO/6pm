@@ -55,7 +55,7 @@
 	"supersedes": {
 	},
 	"authors": [
-		"Fernando Corrêa de Oliveira"
+		"Fernando Correa de Oliveira"
   ],
   "description": "Perl6 module dependency manager (aka npm for Perl6)"
 }
