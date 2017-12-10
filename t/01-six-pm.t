@@ -60,6 +60,7 @@ sub name is rw { state $a }
 		is $meta.name, "my_test";
 		is-deeply $meta.tags, <bla ble bli>;
 		is $meta.perl, "v6.*";
+		isnt $meta.source-url, "";
 	}
 
 	subtest {
