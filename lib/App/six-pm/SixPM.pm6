@@ -31,6 +31,11 @@ class SixPM {
 					$!meta.perl = $perl
 				}
 			}
+
+			if ".git/config".IO.e {
+			    my $git-config = ".git/config".IO.slurp;
+			    $!meta.source-url = ($git-config ~~  m{ \[remote \s+ \"origin\"\] \s+ url \s+ \= \s+ <(\S*)> });
+                        }		    
 			$!meta.save
 		}
 	}
