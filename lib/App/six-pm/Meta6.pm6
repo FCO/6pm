@@ -24,8 +24,8 @@ has Str     %.support               is json-skip-null is rw;
 has Bool    $.production            is json-skip-null is rw    = False;
 has Str     $.license               is json-skip-null is rw    = "https://opensource.org/licenses/Artistic-2.0";
 has Str     @.tags                  is json-skip-null is rw;
-
-has Str         %.scripts           is json-skip-null is rw    = {
+has Str     $.source-url            is json-skip-null is rw;
+has Str     %.scripts           is json-skip-null is rw    = {
     test => "zef test ."
 }
 
