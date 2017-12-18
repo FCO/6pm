@@ -11,7 +11,7 @@ class SixPM {
 	has Installer $.installer = ZefInstaller.new: :$!default-to, :$!DEBUG;
 
 	method get-project-name  { prompt "Project name [{$!meta.name}]: " }
-	method get-project-tags  { prompt("Project tags: ") }
+	method get-project-tags  { prompt("Project tags (separated by space): ") }
 	method get-perl6-version { prompt "perl6 version [{$!meta.perl}]: " }
 
 	method init(:$name, :@tags, :$perl-version) {
@@ -31,6 +31,11 @@ class SixPM {
 					$!meta.perl = $perl
 				}
 			}
+
+			if ".git/config".IO.e {
+			    my $git-config = ".git/config".IO.slurp;
+			    $!meta.source-url = ($git-config ~~  m{ \[remote \s+ \"origin\"\] \s+ url \s+ \= \s+ <(\S*)> }).Str;
+                        }		    
 			$!meta.save
 		}
 	}
