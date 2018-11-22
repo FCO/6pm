@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/FCO/6pm.svg?branch=master)](https://travis-ci.org/FCO/6pm)
 # 🕕 - 6pm
 
+6pm is a NPM for perl6
+
 ## Create META6.json
 
 ```
