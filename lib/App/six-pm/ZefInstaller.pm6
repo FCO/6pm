@@ -7,7 +7,7 @@ class ZefInstaller does Installer {
 		$.run-zef("install", |@argv, :$to, |%pars)
 	}
 
-	method run-zef(+@argv, IO::Path :$to = $!default-to, *%pars) {
+	method run-zef($zef-cmd, +@argv, IO::Path :$to = $!default-to, *%pars) {
 		my @pars = %pars.kv.map: -> $k, $v {
 			my $par = $k.chars == 1 ?? "-" !! "--";
 			do if $v ~~ Bool {
@@ -16,7 +16,8 @@ class ZefInstaller does Installer {
 				"$par$k=$v"
 			}
 		}
-		my $cmd = "zef --to=inst#{$to.?absolute // $to} @pars[] @argv[]";
+		my $cmd = "zef --to=inst#{$to.?absolute // $to} @pars[] $zef-cmd "
+			~ @argv.map({"'{.trans( [｢'｣] => [｢\'｣] )}'"});
 		note $cmd if $!DEBUG;
 		shell $cmd, :err($*ERR), :out($*OUT)
 	}
