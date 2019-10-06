@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/FCO/6pm.svg?branch=master)](https://travis-ci.org/FCO/6pm)
+![](https://github.com/FCO/6pm/workflows/linux/badge.svg)
 # 🕕 - 6pm
 
 6pm is a NPM for perl6
