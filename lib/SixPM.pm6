@@ -3,11 +3,11 @@ no precompilation;
 sub find-sixpm-path($cwd is copy = $*PROGRAM.resolve.parent) {
 	repeat {
 		last if $++ > 10;
-		my $p6m = $cwd.child("perl6-modules");
+		my $p6m = $cwd.child("raku-modules");
 		return $p6m.resolve if $p6m.d;
 		$cwd .= parent
 	} while $cwd.resolve.absolute !~~ "/";
-	"./perl6-modules".IO
+	"./raku-modules".IO
 }
 
 sub EXPORT($find-path?) {
@@ -16,7 +16,7 @@ sub EXPORT($find-path?) {
 			use MONKEY-SEE-NO-EVAL;
 			EVAL "use lib 'inst#{$path.absolute}'";
 		} else {
-			die "'perl6-modules' not found";
+			die "'raku-modules' not found";
 		}
 	}
 

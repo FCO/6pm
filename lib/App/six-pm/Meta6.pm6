@@ -1,4 +1,4 @@
-use JSON::Class;
+use JSON::Class:auth<zef:jonathanstowe>;
 
 unit class App::six-pm::Meta6 does JSON::Class;
 

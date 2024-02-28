@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 use v6;
 use App::six-pm::SixPM;
 my $*MAIN-ALLOW-NAMED-ANYWHERE = True;
@@ -6,7 +6,7 @@ my $*MAIN-ALLOW-NAMED-ANYWHERE = True;
 my $*DEBUG = so %*ENV<_6PM_DEBUG>;
 
 my IO::Path $base-dir   = ".".IO.resolve;
-my IO::Path $default-to = $base-dir.child: "perl6-modules";
+my IO::Path $default-to = $base-dir.child: "raku-modules";
 
 my $six-pm = SixPM.new: :$base-dir, :$default-to;
 
@@ -31,7 +31,7 @@ multi MAIN("exec", +@argv) {
 }
 
 multi MAIN("exec-file", $file, +@argv) {
-	$six-pm.exec: ["perl6", $file, |@argv], :path($file.IO);
+	$six-pm.exec: ["raku", $file, |@argv], :path($file.IO);
 }
 
 multi MAIN("run", Str() $script) {

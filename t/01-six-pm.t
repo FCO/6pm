@@ -44,7 +44,7 @@ sub name is rw { state $a }
 		$_6pm does role :: {
 			has $.get-project-name  is rw = "my_test";
 			has $.get-project-tags  is rw = "bla ble bli";
-			has $.get-perl6-version is rw = "v6.*";
+			has $.get-raku-version is rw = "v6.*";
 		};
 
 		$_6pm.init;

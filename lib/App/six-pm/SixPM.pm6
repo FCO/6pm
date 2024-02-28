@@ -12,7 +12,7 @@ class SixPM {
 
 	method get-project-name  { prompt "Project name [{$!meta.name}]: " }
 	method get-project-tags  { prompt("Project tags (separated by space): ") }
-	method get-perl6-version { prompt "perl6 version [{$!meta.perl}]: " }
+	method get-raku-version { prompt "raku version [{$!meta.perl}]: " }
 
 	method init(:$name, :@tags, :$perl-version) {
 		unless $!meta {
@@ -27,7 +27,7 @@ class SixPM {
 			with $perl-version -> $perl {
 				$!meta.perl = $perl
 			} else {
-				if $.get-perl6-version -> $perl {
+				if $.get-raku-version -> $perl {
 					$!meta.perl = $perl
 				}
 			}
@@ -41,7 +41,7 @@ class SixPM {
 	}
 
 	method install-deps(Bool :f(:$force)) {
-		%*ENV<PERL6LIB> = "inst#{$!default-to.absolute}";
+		%*ENV<RAKULIB> = "inst#{$!default-to.absolute}";
 		%*ENV<PATH>    ~= ":{$!default-to.absolute}/bin";
 		if
 			$!meta and
@@ -58,7 +58,7 @@ class SixPM {
 	}
 
 	method install(+@modules, Bool :f(:$force), Bool :$save, Bool :$save-test, Bool :$save-build) {
-		%*ENV<PERL6LIB> = "inst#{$!default-to.absolute}";
+		%*ENV<RAKULIB> = "inst#{$!default-to.absolute}";
 		%*ENV<PATH>    ~= ":{$!default-to.absolute}/bin";
 		if $.installer.install(|@modules, :to($!default-to.absolute), :$force) {
 			if $save {
@@ -78,13 +78,13 @@ class SixPM {
 		} else {
 			$!default-to.absolute
 		}
-		%*ENV<PERL6LIB> = "inst#{$inst}";
+		%*ENV<RAKULIB> = "inst#{$inst}";
 		%*ENV<PATH>    ~= ":{$inst}/bin";
 		run |@argv
 	}
 
 	method run(Str() $script) {
-		%*ENV<PERL6LIB> = "inst#{$!default-to.absolute}";
+		%*ENV<RAKULIB> = "inst#{$!default-to.absolute}";
 		%*ENV<PATH>    ~= ":{$!default-to.absolute}/bin";
 		shell $_ with $!meta.scripts{$script}
 	}
