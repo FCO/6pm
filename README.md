@@ -1,7 +1,7 @@
 ![](https://github.com/FCO/6pm/workflows/linux/badge.svg)
 # 🕕 - 6pm
 
-6pm is a NPM for perl6
+6pm is a NPM for raku
 
 ## Create META6.json
 
@@ -11,7 +11,7 @@ $ cd TestProject/
 $ 6pm init
 Project name [TestProject]:
 Project tags:
-perl6 version [6.*]:
+raku version [6.*]:
 ```
 
 ## Locally install a Module
@@ -37,7 +37,7 @@ $ 6pm install Heap --save
 ## Run code using the local dependencies
 
 ```
-$ 6pm exec -- perl6 -MHeap -e 'say Heap.new: <q w e r>'
+$ 6pm exec -- raku -MHeap -e 'say Heap.new: <q w e r>'
 Heap.new: [e r q w]
 ```
 
@@ -53,7 +53,7 @@ Heap.new: [e r q w]
 
 ```
 $ echo "use SixPM; use Heap; say Heap.new: <q w e r>" > bla.p6
-$ perl6 bla.p6
+$ raku bla.p6
 Heap.new: [e r q w]
 ```
 
@@ -72,7 +72,7 @@ $ cat META6.json
   ],
   "scripts": {
     "test": "zef test .",
-    "my-script": "perl6 -MHeap -e 'say Heap.new: ^10'"
+    "my-script": "raku -MHeap -e 'say Heap.new: ^10'"
   },
   "depends": [
 

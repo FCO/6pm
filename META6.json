@@ -6,28 +6,16 @@
 	"bin": {
 		"6pm": "bin/6pm"
 	},
-	"emulates": {
-
-	},
 	"perl": "v6.*",
-	"resources": {
-
-	},
 	"build-depends": [
 
 	],
 	"scripts": {
 		"test": "zef test ."
 	},
-	"excludes": {
-
-	},
-	"superseded-by": {
-
-	},
 	"depends": [
 		"zef",
-		"JSON::Class"
+		"JSON::Class:auth<zef:jonathanstowe>"
 	],
 	"tags": [
 		"PACKAGE",
@@ -52,10 +40,8 @@
 	},
 	"production": false,
 	"version": "0.0.11",
-	"supersedes": {
-	},
 	"authors": [
 		"Fernando Correa de Oliveira"
   ],
-  "description": "Perl6 module dependency manager (aka npm for Perl6)"
+  "description": "Raku module dependency manager (aka npm for Raku)"
 }
