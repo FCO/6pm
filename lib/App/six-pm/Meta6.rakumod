@@ -11,7 +11,7 @@ has Str     $.version               is json-skip-null is rw    = "0.0.1";
 has Str     $.description           is json-skip-null is rw    = "";
 has Str     @.authors               is json-skip-null is rw    = [%*ENV<USER> // Empty];
 has Str     %.provides              is json-skip-null is rw;
-has Str     %.bin              		is json-skip-null is rw;
+has Str     %.bin                   is json-skip-null is rw;
 has Str     %.emulates              is json-skip-null is rw;
 has Str     %.supersedes            is json-skip-null is rw;
 has Str     %.superseded-by         is json-skip-null is rw;
@@ -25,7 +25,7 @@ has Bool    $.production            is json-skip-null is rw    = False;
 has Str     $.license               is json-skip-null is rw    = "https://opensource.org/licenses/Artistic-2.0";
 has Str     @.tags                  is json-skip-null is rw;
 has Str     $.source-url            is json-skip-null is rw;
-has Str     %.scripts           is json-skip-null is rw    = {
+has Str     %.scripts               is json-skip-null is rw    = {
     test => "zef test ."
 }
 

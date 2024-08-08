@@ -1,47 +1,50 @@
 {
-	"name": "6pm",
-	"support": {
-		"source": "git://github.com/FCO/6pm.git"
-	},
-	"bin": {
-		"6pm": "bin/6pm"
-	},
-	"perl": "v6.*",
-	"build-depends": [
-
-	],
-	"scripts": {
-		"test": "zef test ."
-	},
-	"depends": [
-		"zef",
-		"JSON::Class:auth<zef:jonathanstowe>"
-	],
-	"tags": [
-		"PACKAGE",
-		"INSTALL",
-		"CLI",
-		"DEVEL",
-		"TERMINAL",
-		"UTILS",
-		"COMMAND LINE"
-	],
-	"license": "Artistic-2.0",
-	"test-depends": [
-		"Test::Mock",
-		"Test::META"
-	],
-	"provides": {
-		"App::six-pm::Installer": "lib/App/six-pm/Installer.pm6",
-		"App::six-pm::Meta6": "lib/App/six-pm/Meta6.pm6",
-		"App::six-pm::SixPM": "lib/App/six-pm/SixPM.pm6",
-		"App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.pm6",
-		"SixPM": "lib/SixPM.pm6"
-	},
-	"production": false,
-	"version": "0.0.11",
-	"authors": [
-		"Fernando Correa de Oliveira"
+  "auth": "zef:FCO",
+  "authors": [
+    "Fernando Correa de Oliveira"
   ],
-  "description": "Raku module dependency manager (aka npm for Raku)"
+  "bin": {
+    "6pm": "bin/6pm"
+  },
+  "build-depends": [
+  ],
+  "depends": [
+    "zef",
+    "JSON::Class:auth<zef:jonathanstowe>"
+  ],
+  "description": "Raku module dependency manager (aka npm for Raku)",
+  "license": "Artistic-2.0",
+  "name": "SixPM",
+  "perl": "v6.*",
+  "production": true,
+  "provides": {
+    "App::six-pm::Installer": "lib/App/six-pm/Installer.rakumod",
+    "App::six-pm::Meta6": "lib/App/six-pm/Meta6.rakumod",
+    "App::six-pm::SixPM": "lib/App/six-pm/SixPM.rakumod",
+    "App::six-pm::ZefInstaller": "lib/App/six-pm/ZefInstaller.rakumod",
+    "SixPM": "lib/SixPM.rakumod"
+  },
+  "resources": [
+  ],
+  "scripts": {
+    "test": "zef test ."
+  },
+  "source-url": "https://github.com/FCO/6pm.git",
+  "support": {
+    "source": "git://github.com/FCO/6pm.git"
+  },
+  "tags": [
+    "PACKAGE",
+    "INSTALL",
+    "CLI",
+    "DEVEL",
+    "TERMINAL",
+    "UTILS",
+    "COMMAND LINE"
+  ],
+  "test-depends": [
+    "Test::Mock",
+    "Test::META"
+  ],
+  "version": "0.0.11"
 }

@@ -1,9 +1,9 @@
+use lib "lib";
 use Test;
 use Test::Mock;
 use App::six-pm::Meta6;
 use App::six-pm::Installer;
 use App::six-pm::ZefInstaller;
-use lib "lib";
 
 plan 8;
 
@@ -44,7 +44,7 @@ sub name is rw { state $a }
 		$_6pm does role :: {
 			has $.get-project-name  is rw = "my_test";
 			has $.get-project-tags  is rw = "bla ble bli";
-			has $.get-raku-version is rw = "v6.*";
+			has $.get-raku-version  is rw = "v6.*";
 		};
 
 		$_6pm.init;
