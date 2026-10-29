@@ -32,8 +32,7 @@ has Str     %.scripts               is json-skip-null is rw    = {
 method set-file($!file) {}
 
 method create(IO::Path:D $file) {
-    my ::?CLASS:D $obj;
-    if $file.f {
+    my ::?CLASS:D $obj = do if $file.f {
         $obj = ::?CLASS.from-json: $file.slurp
     } else {
         $obj = ::?CLASS.bless;
